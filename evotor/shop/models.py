@@ -1,5 +1,11 @@
 from django.db import models
 from util.model import BaseModel
+from org.models import Organization
+
+
+class Shop(BaseModel):
+    title = models.CharField(max_length=50, unique=True)
+    organization = models.ForeignKey(Organization, related_name="+")
 
 
 class ProductTag(BaseModel):
