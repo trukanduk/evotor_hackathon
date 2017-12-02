@@ -1,5 +1,6 @@
 {% extends "main.html" %}
 {% load staticfiles %}
+{% load purchase %}
 
 {% block head_base_override  %}
   <link href="{% static "css/shop/purchases.css" %}" rel="stylesheet">
@@ -26,7 +27,7 @@
   </div>
 
   {% for purchase in purchases %}
-    <div class="card purchase-item border-success">
+    <div class="card purchase-item border-{{purchase.status | status2bootstrap}}">
       <div class="card-header purchase-header" role="tab" id="purchase-{{forloop.counter0}}-header">
         <div class="row">
           <div class="col-2 purchase-{{forloop.counter0}}-date purchase-date">
@@ -42,14 +43,14 @@
           <div class="col-2 purchase-{{forloop.counter0}}-cost purchase-cost">
             100500 руб
           </div>
-          <div class="col-2 purchase-{{forloop.counter0}}-status purchase-status purchase-status-ok">
-            {% if 1 %}
+          <div class="col-2 purchase-{{forloop.counter0}}-status purchase-status purchase-status-{{purchase.status}} text-{{purchase.status | status2bootstrap}}">
+            {% if purchase.status == "ok" %}
               OK
               <span class="oi oi-check" title="OK" aria-hidden="true"></span>
-            {% elif 0 %}
+            {% elif purchase.status == "in-progress" %}
               В обработке
               <span class="oi oi-clock" title="В обработке" aria-hidden="true"></span>
-            {% elif 0 %}
+            {% elif purchase.status == "draft" %}
               Черновик
               <span class="oi oi-document" title="Черновик" aria-hidden="true"></span>
             {% else %}

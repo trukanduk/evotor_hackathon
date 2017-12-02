@@ -1,0 +1,23 @@
+@import "itemlist.sass"
+
+.purchase-item
+    @extend .shop-item
+
+.purchase-status-base
+    visibility: visible
+
+.purchase-status-ok
+    @extend .purchase-status-base
+    color: green
+
+.purchase-status-in-progress
+    @extend .purchase-status-base
+    color: blue
+
+.purchase-status-draft
+    @extend .purchase-status-base
+    color: black
+
+.purchase-status-error
+    @extend .purchase-status-base
+    color: red
