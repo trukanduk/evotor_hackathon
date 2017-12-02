@@ -1,19 +1,64 @@
-{% extends "base.html" %}
+{% extends "main.html" %}
 {% load staticfiles %}
 
 {% block head_base_override  %}
-    <link href="{% static "css/shop/providers.css" %}" rel="stylesheet">
+  <link href="{% static "css/shop/providers.css" %}" rel="stylesheet">
+  <link href="{% static "css/shop/itemlist.css" %}" rel="stylesheet">
 {% endblock %}
 
-{% block main %}
-    {% for provider in providers %}
-        <div class="product card" style="width: 20rem;">
-            <img class="card-img-top" src="http://www.3kol.tv/assets/memes_tpl/mini/mini_Doge.jpg" alt="Card image cap">
-            <div class="card-body">
-                <h4 class="card-title">{{ provider.title }}</h4>
-                <p class="card-text">{{ provier.bar_code }}</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-        </div> 
-    {% endfor %}
+{% block content %}
+  <div class="card text-white bg-secondary provider-items-header">
+    <div class="card-header provider-items-header-header" role="tab" id="provider-items-header-header">
+      <div class="row">
+        <div class="col-4">
+          Название
+        </div>
+        <div class="col-2">
+          Пред. завоз
+        </div>
+        <div class="col-2">
+          След. завоз
+        </div>
+        <div class="col-2">
+          Теги
+        </div>
+      </div>
+    </div>
+  </div>
+  {% for provider in providers %}
+    <div class="card provider-item">
+      <div class="card-header provider-header" role="tab" id="provider-{{forloop.counter0}}-header">
+        <div class="row">
+          <div class="col-4">
+            <h5 class="mb-0">
+              <a data-toggle="collapse" href="#provider-{{forloop.counter0}}-body" aria-expanded="true" aria-controls="provider-{{forloop.counter0}}-body">
+                Хлебзавод
+              </a>
+            </h5>
+          </div>
+          <div class="col-2">
+            20.11.2017
+          </div>
+          <div class="col-2">
+            28.11.2017
+          </div>
+          <div class="col-3 provider-{{forloop.counter0}}-tags provider-tags">
+            <button role="button" class="btn btn-secondary btn-sm tag-button">
+              Хлебзавод
+            </button>
+            <button role="button" class="btn btn-secondary btn-sm tag-button">
+              Скоропортящееся
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="provider-{{forloop.counter0}}-body" class="collapse provider-body" role="tabpanel" aria-labelledby="provider-{{forloop.counter0}}-header" data-parent="#accordion">
+        <div class="card-body">
+          <img src="http://www.sunny-cat.ru/datas/users/1-kenny005.jpg" style="width:30%;">
+          Чо надо
+        </div>
+      </div>
+    </div>
+  {% endfor %}
 {% endblock %}
