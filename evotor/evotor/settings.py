@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'shop',
     'util',
+    'query_manager',
 ]
 
 MIDDLEWARE = [

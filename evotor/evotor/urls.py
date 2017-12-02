@@ -20,4 +20,5 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url("^shop/", include("shop.urls")),
+    url("^query/", include("query_manager.urls")),
 ]
