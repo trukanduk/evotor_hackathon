@@ -64,6 +64,7 @@ class Purchase(BaseModel):
         return {
             "id": self.id,
             "product": self.product.public_dto(),
+            "status": self.status,
             "price": self.price,
             "dt": self.dt,
         }
