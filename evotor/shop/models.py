@@ -1,11 +1,30 @@
 from django.db import models
 from util.model import BaseModel
-from org.models import Organization
+from org.models import Organization, User
 
 
 class Shop(BaseModel):
     title = models.CharField(max_length=50, unique=True)
     organization = models.ForeignKey(Organization, related_name="+")
+
+
+class UserShop(BaseModel):
+    class Role:
+        READ = "r"
+        READ_WRITE = "rw"
+
+        choices = (
+            (READ, "Read"),
+            (READ_WRITE, "Read/Write"),
+        )
+    
+    user = models.ForeignKey(User, related_name="+")
+    shop = models.ForeignKey(Shop, related_name="+")
+    type = models.CharField(
+        max_length=2,
+        choices=Role.choices,
+        default=Role.READ_WRITE,
+    )
 
 
 class ProductTag(BaseModel):

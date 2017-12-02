@@ -5,7 +5,10 @@ from util.model import BaseModel
 
 
 class Organization(BaseModel):
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=30, unique=True)
+
+    def __str__(self):
+        return self.title
 
 
 class User(AbstractUser):
@@ -33,3 +36,9 @@ class User(AbstractUser):
         default=Role.ADMIN,
     )
     default_password = models.CharField(max_length=30, null=True, blank=True)
+    
+    def full_name(self):
+        return "{} {}".format(self.first_name, self.last_name)
+
+    def __str__(self):
+        return self.full_name()

@@ -1,0 +1,20 @@
+{% extends "main.html" %}
+
+{% block content %}
+    <div>
+        {{ request.user.full_name }}
+    </div>
+    <div>
+        Организация {{ request.user.organization.title }}
+    </div>
+    <div>
+        Магазины
+    </div>
+    <div>
+        {% for shop in user_shops %}
+            <div>
+                {{ shop.shop.title }}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,10 +1,16 @@
 from django.contrib import admin
 from shop.models import (
+    Shop,
     Product,
     ProductTag,
     Provider,
     Purchase,
 )
+
+
+@admin.register(Shop)
+class ShopAdmin(admin.ModelAdmin):
+    list_display = ("title", "organization",)
 
 
 @admin.register(ProductTag)
