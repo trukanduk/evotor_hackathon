@@ -2,6 +2,7 @@ from django.contrib import admin
 from shop.models import (
     Product,
     ProductTag,
+    Provider,
 )
 
 
@@ -12,4 +13,9 @@ class ProductTagAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Provider)
+class ProviderAdmin(admin.ModelAdmin):
     pass

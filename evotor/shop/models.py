@@ -13,7 +13,7 @@ class ProductTag(BaseModel):
 class Product(BaseModel):
     bar_code = models.CharField(max_length=30, unique=True)
     title = models.CharField(max_length=100)
-    tags = models.ManyToManyField(ProductTag, related_name="+", null=True, blank=True)
+    tags = models.ManyToManyField(ProductTag, related_name="+", blank=True)
     delivery_date = models.DateTimeField(null=True, default=None)
     price = models.FloatField()
     cost_price = models.FloatField()
@@ -36,4 +36,12 @@ class Product(BaseModel):
 
 class Provider(BaseModel):
     title = models.CharField(max_length=30, unique=True)
-    products = models.ManyToManyField(Product, related_name="+", null=True, blank=True)
+    products = models.ManyToManyField(Product, related_name="+", blank=True)
+
+    def __str__(self):
+        return title
+
+    def _dto(self, public=True):
+        return {
+            "title": self.title,
+        }
