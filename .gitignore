@@ -3,5 +3,5 @@
 /lib
 /include
 pip-selfcheck.json
-
+.Python
 __pycache__
