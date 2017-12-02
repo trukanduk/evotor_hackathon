@@ -1,3 +1,3 @@
 #!/bin/sh
 
-sass --watch static/sass:static/css
+sass --watch sass:static/css
