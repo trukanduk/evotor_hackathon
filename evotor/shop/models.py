@@ -56,6 +56,7 @@ class Provider(BaseModel):
 
 class Purchase(BaseModel):
     product = models.ForeignKey(Product, related_name="+")
+    status = models.CharField(max_length=20, default="ok")
     price = models.FloatField()
     dt = models.DateTimeField()
 
