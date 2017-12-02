@@ -3,6 +3,7 @@ from shop.models import (
     Product,
     ProductTag,
     Provider,
+    Purchase,
 )
 
 
@@ -18,4 +19,9 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Provider)
 class ProviderAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Purchase)
+class PurchaseAdmin(admin.ModelAdmin):
     pass

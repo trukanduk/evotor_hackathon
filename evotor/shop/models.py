@@ -2,7 +2,6 @@ from django.db import models
 from util.model import BaseModel
 
 
-
 class ProductTag(BaseModel):
     title = models.CharField(max_length=30, unique=True)
 
@@ -19,7 +18,7 @@ class Product(BaseModel):
     cost_price = models.FloatField()
     count = models.IntegerField(default=0)
 
-    def _dto(self, public=False):
+    def _dto(self, public):
         return {
             "bar_code": self.bar_code,
             "title": self.title,
@@ -39,9 +38,22 @@ class Provider(BaseModel):
     products = models.ManyToManyField(Product, related_name="+", blank=True)
 
     def __str__(self):
-        return title
+        return self.title
 
-    def _dto(self, public=True):
+    def _dto(self, public):
         return {
             "title": self.title,
+        }
+
+
+class Purchase(BaseModel):
+    product = models.ForeignKey(Product, related_name="+")
+    price = models.FloatField()
+    dt = models.DateTimeField()
+
+    def _dto(self, public):
+        return {
+            "product": self.product.public_dto(),
+            "price": self.price,
+            "dt": self.dt,
         }
