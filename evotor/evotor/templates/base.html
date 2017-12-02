@@ -3,12 +3,13 @@
 
 <html>
 <head>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
 
   {% bootstrap_css %}
   {% bootstrap_javascript %}
   <link href="{% static "/css/open-iconic/open-iconic-bootstrap.css" %}" rel="stylesheet">
   <link href="{% static "css/shop/base.css" %}" rel="stylesheet">
+  <script src="{% static "js/query.js" %}"></script>
   {% block head_base_override %}{% endblock %}
 </head>
 <body>
