@@ -5,3 +5,5 @@
 pip-selfcheck.json
 .Python
 __pycache__
+
+*.sw*
