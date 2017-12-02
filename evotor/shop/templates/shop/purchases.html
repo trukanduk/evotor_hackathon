@@ -6,13 +6,64 @@
 {% endblock %}
 
 {% block content %}
+  <div class="card text-white bg-secondary purchase-items-header">
+    <div class="card-header purchase-items-header-header" role="tab" id="purchase-items-header-header">
+      <div class="row">
+        <div class="col-2">
+          Дата
+        </div>
+        <div class="col-4">
+          Поставщик
+        </div>
+        <div class="col-2">
+          Сумма
+        </div>
+        <div class="col-2">
+          Статус
+        </div>
+      </div>
+    </div>
+  </div>
+
   {% for purchase in purchases %}
-    <div class="product card" style="width: 20rem;">
-      <img class="card-img-top" src="http://www.3kol.tv/assets/memes_tpl/mini/mini_Doge.jpg" alt="Card image cap">
-      <div class="card-body">
-        <h4 class="card-title">{{ purchase.product.title }} {{ purchase.price }} {{ purchase.dt }}</h4>
-        <p class="card-text"></p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+    <div class="card purchase-item border-success">
+      <div class="card-header purchase-header" role="tab" id="purchase-{{forloop.counter0}}-header">
+        <div class="row">
+          <div class="col-2 purchase-{{forloop.counter0}}-date purchase-date">
+            <h5 class="mb-0">
+              <a data-toggle="collapse" href="#purchase-{{forloop.counter0}}-body" aria-expanded="true" aria-controls="purchase-{{forloop.counter0}}-body">
+                20.11.2017
+              </a>
+            </h5>
+          </div>
+          <div class="col-4 purchase-{{forloop.counter0}}-provider purchase-provider">
+            Хлебозавод
+          </div>
+          <div class="col-2 purchase-{{forloop.counter0}}-cost purchase-cost">
+            100500 руб
+          </div>
+          <div class="col-2 purchase-{{forloop.counter0}}-status purchase-status purchase-status-ok">
+            {% if 1 %}
+              OK
+              <span class="oi oi-check" title="OK" aria-hidden="true"></span>
+            {% elif 0 %}
+              В обработке
+              <span class="oi oi-clock" title="В обработке" aria-hidden="true"></span>
+            {% elif 0 %}
+              Черновик
+              <span class="oi oi-document" title="Черновик" aria-hidden="true"></span>
+            {% else %}
+              ХЗ
+              <span class="oi oi-ban" title="Хз" aria-hidden="true"></span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div id="purchase-{{forloop.counter0}}-body" class="collapse purchase-body" role="tabpanel" aria-labelledby="purchase-{{forloop.counter0}}-header" data-parent="#accordion">
+        <div class="card-body">
+          <img src="http://cdn.cnn.com/cnnnext/dam/assets/160927210830-tk-ah0927-exlarge-169.jpg" style="width:50%;">
+        </div>
       </div>
     </div>
   {% endfor %}
