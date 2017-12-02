@@ -1,10 +1,12 @@
 from django.shortcuts import render
+from shop.models import (
+    Product,
+)
 
-# Create your views here.
 
 def products_view(request):
+    products = Product.objects.all()
+    
     return render(request, "shop/products.html", {
-        "products": [{
-            "name": "product-{}".format(i),
-        } for i in range(15)],
+        "products": map(Product.public_dto, products),
     })
