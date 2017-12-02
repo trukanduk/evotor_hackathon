@@ -1,8 +1,13 @@
 {% extends "base.html" %}
+{% load staticfiles %}
+
+{% block head_base_override  %}
+    <link href="{% static "css/shop/products.css" %}" rel="stylesheet">
+{% endblock %}
 
 {% block main %}
     {% for product in products %}
-        <div class="card" style="width: 20rem;">
+        <div class="product card" style="width: 20rem;">
             <img class="card-img-top" src="http://www.3kol.tv/assets/memes_tpl/mini/mini_Doge.jpg" alt="Card image cap">
             <div class="card-body">
                 <h4 class="card-title">{{ product.name }}</h4>
