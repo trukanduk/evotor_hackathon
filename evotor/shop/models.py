@@ -32,3 +32,8 @@ class Product(BaseModel):
 
     def __str__(self):
         return "{} ({})".format(self.title, self.bar_code)
+
+
+class Provider(BaseModel):
+    title = models.CharField(max_length=30, unique=True)
+    products = models.ManyToManyField(Product, related_name="+", null=True, blank=True)
