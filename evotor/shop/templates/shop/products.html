@@ -29,9 +29,21 @@
     </div>
   </div>
 
-  <div class="product-items-contaier items-container" id="items-container">
-    {% include "shop/products_items.html" with objs=products %}
+  <div class="product-items-container items-container" id="items-container-wrapper">
+    <center>
+      <img id="items-loading-img" style="display:none" src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" />
+    </center>
+    <div id="items-container-loading-error" class="alert alert-danger" style="display:none" >
+      <h5 class="alert-heading">Произошла ошибка</h5>
+      <span class="item-container-loading-error-desc"></span>
+    </div>
+    <div class="product-items-container items-container" id="items-container">
+      {% include "shop/products_items.html" with objs=products %}
+    </div>
   </div>
 
-  <button role="button" onclick="request_items('product', 'shop/products_items.html', {})">
+  <button role="button" onclick="request_items('product', 'shop/products_items.html', {})" class="btn btn-dark">
+    <span class="oi oi-reload" title="Черновик" aria-hidden="true"></span>
+  </button>
+
 {% endblock %}

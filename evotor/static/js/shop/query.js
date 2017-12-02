@@ -1,10 +1,8 @@
-function query_html(model, template, params, callback) {
+function query_html(model, template, params) {
     params.template = template;
-    $.get("/query/html/" + model + "/?" + $.param(params), callback);
+    return $.get("/query/html/" + model + "/?" + $.param(params));
 }
 
-function query_json(model, params, callback) {
-    $.get("/query/json/" + model + "/?" + $.param(params), function(data) {
-        callback(data.data);
-    });
+function query_json(model, params) {
+    return $.get("/query/json/" + model + "/?" + $.param(params));
 }
