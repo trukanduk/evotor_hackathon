@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap4',
 
     'shop',
 ]
@@ -56,7 +57,7 @@ ROOT_URLCONF = 'evotor.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["evotor/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

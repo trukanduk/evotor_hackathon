@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block main %}
+    {% for product in products %}
+        <div class="card" style="width: 20rem;">
+            <img class="card-img-top" src="http://www.3kol.tv/assets/memes_tpl/mini/mini_Doge.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h4 class="card-title">{{ product.name }}</h4>
+                <p class="card-text">{{ product.name }}</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div> 
+    {% endfor %}
+{% endblock %}

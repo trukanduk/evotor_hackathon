@@ -1,0 +1,15 @@
+{% load bootstrap4 %}
+<html>
+<head>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% block head_base_override %}{% endblock %}
+</head>
+<body>
+    <div class="header"></div>
+    <div class="main">
+        {% block main %}{% endblock %}
+    </div>
+</body>
+
+</html>
