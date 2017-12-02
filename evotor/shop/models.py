@@ -8,6 +8,12 @@ class ProductTag(BaseModel):
     def __str__(self):
         return self.title
 
+    def _dto(self, public):
+        return {
+            "id": self.id,
+            "title": self.title,
+        }
+
 
 class Product(BaseModel):
     bar_code = models.CharField(max_length=30, unique=True)
@@ -20,6 +26,7 @@ class Product(BaseModel):
 
     def _dto(self, public):
         return {
+            "id": self.id,
             "bar_code": self.bar_code,
             "title": self.title,
             "delivery_date": self.delivery_date,
@@ -42,6 +49,7 @@ class Provider(BaseModel):
 
     def _dto(self, public):
         return {
+            "id": self.id,
             "title": self.title,
         }
 
@@ -53,6 +61,7 @@ class Purchase(BaseModel):
 
     def _dto(self, public):
         return {
+            "id": self.id,
             "product": self.product.public_dto(),
             "price": self.price,
             "dt": self.dt,
