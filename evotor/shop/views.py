@@ -8,23 +8,23 @@ from shop.models import (
 
 def products_view(request):
     products = Product.objects.all()
-    
+
     return render(request, "shop/products.html", {
-        "products": map(Product.public_dto, products),
+        "products": products,
     })
 
 
 def providers_view(request):
     providers = Provider.objects.all()
-    
+
     return render(request, "shop/providers.html", {
-        "providers": map(Provider.public_dto, providers),
+        "providers": providers,
     })
 
 
 def purchases_view(request):
     purchases = Purchase.objects.all()
-    
+
     return render(request, "shop/purchases.html", {
-        "purchases": map(Purchase.public_dto, purchases),
+        "purchases": purchases,
     })
