@@ -70,7 +70,7 @@ def org1():
                     cost_price=13.3,
                     count=len(product[0]),
                 )
-                for tag in products[1]:
+                for tag in product[1]:
                     p.tags.add(get_tag(tag))
 
 org1()
