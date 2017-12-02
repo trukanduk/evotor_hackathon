@@ -7,6 +7,9 @@ class Shop(BaseModel):
     title = models.CharField(max_length=50, unique=True)
     organization = models.ForeignKey(Organization, related_name="+")
 
+    def __str__(self):
+        return self.title
+
 
 class UserShop(BaseModel):
     class Role:
@@ -41,8 +44,15 @@ class ProductTag(BaseModel):
 
 
 class Product(BaseModel):
-    bar_code = models.CharField(max_length=30, unique=True)
+    
+    class Meta:
+        unique_together = (
+            ("bar_code", "shop",),
+        )
+    
+    bar_code = models.CharField(max_length=30)
     title = models.CharField(max_length=100)
+    shop = models.ForeignKey(Shop, related_name="+", null=True, default=None)
     tags = models.ManyToManyField(ProductTag, related_name="+", blank=True)
     delivery_date = models.DateTimeField(null=True, default=None)
     price = models.FloatField()

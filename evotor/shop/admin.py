@@ -20,7 +20,10 @@ class ProductTagAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("title", "price", "count",)
+    list_display = ("title", "bar_code", "shop", "organization", "price", "count",)
+
+    def organization(self, obj):
+        return obj.shop.organization
 
 
 @admin.register(Provider)
