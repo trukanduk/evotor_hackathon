@@ -14,7 +14,7 @@ class ProductTagAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    pass
+    list_display = ("title", "price", "count",)
 
 
 @admin.register(Provider)
@@ -24,4 +24,7 @@ class ProviderAdmin(admin.ModelAdmin):
 
 @admin.register(Purchase)
 class PurchaseAdmin(admin.ModelAdmin):
-    pass
+    list_display = ("product_title", "price", "dt",)
+    
+    def product_title(self, purchase):
+        return purchase.product.title
