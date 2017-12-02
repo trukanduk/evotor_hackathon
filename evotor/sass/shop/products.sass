@@ -1,2 +1,22 @@
-.product
-    color: brown
+.status-progress
+    position: relative
+
+.status-progress-hint
+    position: absolute
+    width: 0px
+    border: none
+    border-left: 1px solid
+    height: 100%
+    // left: 20%
+
+.status-progress-hint-low
+    @extend .status-progress-hint
+    border-color: red
+
+.status-progress-hint-high
+    @extend .status-progress-hint
+    border-color: blue
+
+.tag-button
+    font-size: 0.5em
+    padding: 0.1rem 0.2rem
