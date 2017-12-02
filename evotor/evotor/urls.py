@@ -21,8 +21,3 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url("^shop/", include("shop.urls")),
 ]
-
-print(settings.STATIC_ROOT)
-
-if settings.DEBUG:
-    urlpatterns += static.static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

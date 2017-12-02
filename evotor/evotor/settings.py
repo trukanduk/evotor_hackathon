@@ -122,7 +122,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 if os.path.isfile(os.path.join(BASE_DIR, "evotor/priv_settings.py")):
     from evotor.priv_settings import *
