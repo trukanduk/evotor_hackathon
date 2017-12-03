@@ -6,6 +6,7 @@ from org.models import Organization, User
 class Shop(BaseModel):
     title = models.CharField(max_length=50, unique=True)
     organization = models.ForeignKey(Organization, related_name="+")
+    data_id = models.CharField(max_length=30, default="")
 
     def __str__(self):
         return self.title
@@ -20,7 +21,7 @@ class UserShop(BaseModel):
             (READ, "Read"),
             (READ_WRITE, "Read/Write"),
         )
-    
+
     user = models.ForeignKey(User, related_name="+")
     shop = models.ForeignKey(Shop, related_name="+")
     type = models.CharField(
@@ -44,12 +45,12 @@ class ProductTag(BaseModel):
 
 
 class Product(BaseModel):
-    
+
     class Meta:
         unique_together = (
             ("bar_code", "shop",),
         )
-    
+
     bar_code = models.CharField(max_length=30)
     title = models.CharField(max_length=100)
     shop = models.ForeignKey(Shop, related_name="+", null=True, default=None)
