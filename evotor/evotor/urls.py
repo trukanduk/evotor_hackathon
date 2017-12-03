@@ -22,4 +22,5 @@ urlpatterns = [
     url("^shop/", include("shop.urls")),
     url("^query/", include("query_manager.urls")),
     url("^org/", include("org.urls")),
+    url("^", include("landing.urls")),
 ]

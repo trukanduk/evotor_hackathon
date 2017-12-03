@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'util',
     'query_manager',
     'org',
+    'landing',
 ]
 
 MIDDLEWARE = [
@@ -108,6 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = "org.User"
 
 LOGIN_REDIRECT_URL = "/org/"
+LOGOUT_REDIRECT_URL = "/"
 
 
 # Internationalization
