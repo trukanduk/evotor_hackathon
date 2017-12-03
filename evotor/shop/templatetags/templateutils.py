@@ -1,7 +1,7 @@
 from django import template
 import json
 from django.utils.safestring import mark_safe
-from random import choice
+from random import choice, random
 
 register = template.Library()
 
@@ -43,4 +43,22 @@ def getstatus(v, m):
 @register.filter(name="pickrandname")
 def pickrand(iterable):
     return choice(iterable)
+
+@register.filter(name="getminpairsuggname")
+def getminpairsuggname(pair_suggestion):
+    if float(pair_suggestion[1][5]) < float(pair_suggestion[1][6]):
+        return pair_suggestion[1][3]
+    else:
+        return pair_suggestion[1][4]
+
+@register.filter(name="getoptimizedpairsuggestcost")
+def getoptimizedpairsuggestcost(pair_suggestion, ratio=15.0):
+    if float(pair_suggestion[1][5]) < float(pair_suggestion[1][6]):
+        return 0.01 * float(pair_suggestion[1][5]) * ratio
+    else:
+        return 0.01 * float(pair_suggestion[1][6]) * ratio
+
+@register.filter(name="randnum")
+def randnum(m, mm):
+    return int(random() * (float(mm) - float(m)) + float(m))
 

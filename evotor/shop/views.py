@@ -124,6 +124,6 @@ def extract_suggests(shop_id):
     scores = temp["score"].values
 
     for good_id, score in zip(items, scores):
-        output += [("ill", good_id, score)]
+        output += [("ill", good_id, score, Product.objects.all().filter(bar_code=good_id).get())]
 
     return output

@@ -24,11 +24,8 @@
   </div>
   {% if suggests %}
     {% with suggestion=suggests|pickrandname %}
-      <div class="alert alert-success row">
-        Мы обнаружили, что на рынке высокой популярностью пользуется товар &nbsp;<i>{{suggestion.1.strip}}</i>. Возможно, стоит включить его в свои товары!
-        {# Мы нашли пару товаров, которые часто покупают вместе. Вы можете продавать их вместе за min - 30% #}
-        {# Мы нашли товар, который не пользуется спросом. Мы предлагаем снизить цену на NAME на 10%, чтобы увеличить свою прибыль #}
-      </div>
+      {%include "shop/single_suggestion.html" with suggestion=suggestion %}
+
       <div class="container-fluid" style="margin-top: -20px; margin-bottom: 20px;">
         <div style="float:right">
           <button class="btn btn-link">Все предложения >></button>
