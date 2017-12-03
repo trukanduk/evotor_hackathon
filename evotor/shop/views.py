@@ -39,19 +39,14 @@ def products_view(request, shop_id):
                 shop_data[p.bar_code]['values'] = list(map(float, df.iloc[:,1].values))
                 shop_data[p.bar_code]['is_pred'] = list(map(bool, df.iloc[:,2].values))
 
-    suggests = pd.read_csv("suggests_for_shops.csv")
-    vals = pd.read_csv("items_to_add.csv").values
-    id_to_name = dict(list(zip(vals[:, 0], vals[:, 1])))
-
-    items = list(filter(lambda x: x > 0, list(suggests[shop.data_id])))
-    names = list(map(lambda x: id_to_name[x], items))
+    output = extract_suggests(shop.data_id)
 
     return render(request, "shop/products.html", {
         "products": products,
         "shop": shop,
         "shop_id": shop_id,
         "shop_data": shop_data,
-        "suggests": list(zip(items, names))
+        "suggests": output
     })
 
 @safe_view
@@ -99,13 +94,36 @@ def get_excel(request, shop_id):
 
 @safe_view
 def get_suggests(request, shop_id):
+    output = extract_suggests(shop_id)
+
+    return render(request, "shop/suggests.html", {
+        "suggests": output
+    })
+
+def extract_suggests(shop_id):
+    output = []
+
     suggests = pd.read_csv("suggests_for_shops.csv")
     vals = pd.read_csv("items_to_add.csv").values
     id_to_name = dict(list(zip(vals[:, 0], vals[:, 1])))
 
     items = list(filter(lambda x: x > 0, list(suggests[shop_id])))
     names = list(map(lambda x: id_to_name[x], items))
+    for item, name in zip(items, names):
+        output += [("suggest", item, name)]
 
-    return render(request, "shop/suggests.html", {
-        "suggests": list(zip(items, names))
-    })
+    try:
+        with open(str(shop_id) + ".csv", "r") as f:
+            output += [("pair", list(map(lambda x: x.split(",", maxsplit=1), f.readlines())))]
+    except:
+        pass
+
+    illiquid = pd.read_csv("illiquid.csv")
+    temp = illiquid[illiquid["shop_id"] == int(shop_id)]
+    items = temp["good_id"].values
+    scores = temp["score"].values
+
+    for good_id, score in zip(items, scores):
+        output += [("ill", good_id, score)]
+
+    return output
