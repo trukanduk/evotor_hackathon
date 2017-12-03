@@ -67,6 +67,7 @@ class Product(BaseModel):
             "id": self.id,
             "bar_code": self.bar_code,
             "title": self.title,
+            "shop_id": self.shop.id,
             "delivery_date": self.delivery_date,
             "tags": list(sorted(map(lambda tag: tag.title, self.tags.all()))),
             "price": "{:.2f}".format(self.price),
