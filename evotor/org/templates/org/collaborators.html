@@ -1,0 +1,26 @@
+{% extends "main.html" %}
+
+{% block content %}
+    <div>
+        <h3>
+            Сотрудники
+            <a href="/org/add_manager"><button type="button" class="btn btn-primary">Добавить</button></a>
+        </h3>
+    </div>  
+    <table class="table table-bordered">
+        <tr>
+            <th>Имя</th>
+            <th>Роль</th>
+            <th>Логин</th>
+            <th>Email</th>
+        </tr>
+        {% for manager in managers %}
+            <tr>
+                <td><a href="/org/manager_rights/{{ manager.id }}/">{{ manager.full_name }}</a></td>
+                <td>{{ manager.role_for_human }}</td>
+                <td>{{ manager.username }}</td>
+                <td>{{ manager.email }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

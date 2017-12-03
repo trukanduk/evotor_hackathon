@@ -1,0 +1,41 @@
+{% extends "main.html" %}
+
+{% block content %}
+    <div>
+        <h3>
+            Управление правами: {{ manager.full_name }}
+        </h3>
+    </div>  
+    <table class="table table-bordered">
+        {% for right in rights %}
+            <tr>
+                <td><a href="/shop/products/{{ right.shop.id }}/">{{ right.shop.title }}</a></td>
+                <td>
+                    <span class="oi oi-eye"></span>
+                    {% if shop.type == shop.Role.READ_WRITE %}
+                        <span class="oi oi-pencil"></span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="/org/manager_rights/delete/{{ right.id }}/">
+                        <button type="button" class="btn btn-danger"><span class="oi oi-trash"></span></button>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <div style="margin-top: 20px;">
+        <div>
+            <h4>Добавить роль</h4>
+        </div>
+        <form action="/org/manager_rights/{{ manager.id }}/add/" method="POST">
+            {% csrf_token %}
+            <select class="custom-select" name="shop_id">
+                {% for shop in shops %}
+                    <option value="{{ shop.id }}" {% if not loop.index %}default{% endif %}>{{ shop.title }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary">OK</button>
+        </form>
+    </div>
+{% endblock %}

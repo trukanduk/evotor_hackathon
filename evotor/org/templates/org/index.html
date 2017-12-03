@@ -47,7 +47,7 @@
                 </td>
                 <td class="org-shop-managers">
                     {% for manager in shop.shop.managers %}
-                        {{ manager.full_name }}<br>
+                        <a href="/org/manager_rights/{{ manager.id }}/">{{ manager.full_name }}</a><br>
                     {% endfor %}
                 </td>
                 <td class="org-shop-week-profit org-shop-profit-{{ shop.shop.week_profit_type }}">
@@ -68,5 +68,5 @@
                 </td>
             </tr>
         {% endfor %}
-    </div>
+    </table>
 {% endblock %}
