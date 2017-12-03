@@ -19,7 +19,7 @@
         <div class="col-2">
           <div class="progress status-progress">
             {% with mpp=product.count|getstatus:"0-10" %}
-              <div class="progress-bar bg-danger" role="progressbar" style="width: {{mpp}}%;" aria-valuenow="{{mpp}}" aria-valuemin="0" aria-valuemax="100"></div>
+              <div class="progress-bar bg{{product.count|status2bootstrap:"1"}}" role="progressbar" style="width: {{mpp}}%;" aria-valuenow="{{mpp}}" aria-valuemin="0" aria-valuemax="100"></div>
             {% endwith %}
             {% with mpp=product.count|getstatus:"10-90" %}
               <div class="progress-bar bg-success" role="progressbar" style="width: {{mpp}}%;" aria-valuenow="{{mpp}}" aria-valuemin="0" aria-valuemax="100"></div>
@@ -72,16 +72,16 @@
               </tr>
               <tr>
                 <td>
-                  {{product.cost_price}}&#8381;
+                  {{product.cost_price|floatformat:2}}&#8381;
                 </td>
                 <td>
-                  {{product.price}}&#8381;
+                  {{product.price|floatformat:2}}&#8381;
                 </td>
                 <td>
-                  {{product.price|minus:product.cost_price|floatformat}}&#8381;
+                  {{product.price|minus:product.cost_price|floatformat:2}}&#8381;
                 </td>
                 <td>
-                  {{product.price|marja:product.cost_price|floatformat}}%
+                  {{product.price|marja:product.cost_price|floatformat:2}}%
                 </td>
               </tr>
               <tr>

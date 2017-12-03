@@ -26,13 +26,13 @@ def marja(val1, val2):
     return 100.0 * (float(val1) - float(val2)) / (float(val1))
 
 @register.filter(name="status2bootstrap")
-def status2bootstrap(v):
+def status2bootstrap(v, always=False):
     if v < 10:
-        return 'error'
+        return '-danger'
     elif v < 90:
-        return 'success'
+        return '' if not always else '-success'
     else:
-        return 'primary'
+        return '-primary'
 
 @register.filter(name="getstatus")
 def getstatus(v, m):

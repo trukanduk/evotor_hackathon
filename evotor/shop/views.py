@@ -18,24 +18,17 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-@safe_view
-def products_view(request, shop_id):
+def get_shop_data(shop_id, products):
     shop = Shop.objects.get(id=shop_id)
-    params = QueryParams.parse(request)
-    params.filter.update(shop=shop)
-    products = exec_query_raw(params, Product)
-
     shop_data = {}
-    t = []
     if shop.data_id and os.path.isdir(BASE_DIR + '/data/successes/' + shop.data_id):
         for p in products:
-            t += [int(p.bar_code)]
             fname = BASE_DIR + '/data/successes/' + shop.data_id + '/' + p.bar_code + '.csv'
             if p.bar_code and os.path.isfile(fname):
                 shop_data[p.bar_code] = {}
 
                 df = pd.read_csv(fname)
-                shop_data[p.bar_code]['rest'] = list(map(float, df.iloc[:,0].values))
+                shop_data[p.bar_code]['rest'] = list(map(float, df.iloc[:,3].values))
                 shop_data[p.bar_code]['values'] = list(map(float, df.iloc[:,1].values))
                 shop_data[p.bar_code]['is_pred'] = list(map(bool, df.iloc[:,2].values))
 
@@ -43,6 +36,20 @@ def products_view(request, shop_id):
         output = extract_suggests(shop.data_id)
     except:
         output =[]
+
+    return shop_data
+
+@safe_view
+def products_view(request, shop_id):
+    shop = Shop.objects.get(id=shop_id)
+    params = QueryParams.parse(request)
+    params.filter.update(shop=shop)
+    products = exec_query_raw(params, Product)
+
+    shop_data = get_shop_data(shop_id, products)
+
+    # raise RuntimeError([shop.data_id, ''] + sorted(t))
+    output = extract_suggests(shop_id)
 
     return render(request, "shop/products.html", {
         "products": products,
@@ -99,19 +106,27 @@ def get_excel(request, shop_id):
 @safe_view
 def get_suggests(request, shop_id):
     shop = Shop.objects.get(id=shop_id)
-    output = extract_suggests(shop.data_id)
+    output = extract_suggests(shop_id)
 
     return render(request, "shop/suggests.html", {
-        "suggests": output
+        "suggests": output,
+        "shop": shop,
     })
 
 
 def extract_suggests(shop_id):
+    shop = Shop.objects.get(id=shop_id)
+    shop_id = shop.data_id
     output = []
 
     suggests = pd.read_csv("suggests_for_shops.csv")
     vals = pd.read_csv("items_to_add.csv").values
     id_to_name = dict(list(zip(vals[:, 0], vals[:, 1])))
+
+    try:
+        output += extract_warnings(shop.id)
+    except:
+        pass
 
     items = list(filter(lambda x: x > 0, list(suggests[shop_id])))
     names = list(map(lambda x: id_to_name[x], items))
@@ -134,8 +149,15 @@ def extract_suggests(shop_id):
 
     return output
 
-def extract_warnings(shop_id, type_):
+def extract_warnings(shop_id, horizont=3):
+    # assert shop_id != 4, '{} {}'.format(list(map(lambda x: (x.id, x.title), Shop.objects.all())), shop_id)
+    # raise RuntimeError(Shop.objects.get(id=shop_id))
     shop = Shop.objects.get(id=shop_id)
-    empty_products = Product.objects.filter(shop_id=shop_id)
+    result = []
+    shop_data = get_shop_data(shop.id, Product.objects.filter(shop_id=shop_id).all())
+    # raise ValueError(shop_data)
+    for bar_code, datum in shop_data.items():
+        if datum['rest'][-3] <= 10:
+            result.append(('over', Product.objects.filter(bar_code=bar_code).first()))
 
-    return output
+    return result
