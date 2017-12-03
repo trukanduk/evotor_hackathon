@@ -41,6 +41,7 @@ def products_view(request, shop_id):
 
     return render(request, "shop/products.html", {
         "products": products,
+        "shop": shop,
         "shop_id": shop_id,
         "shop_data": shop_data
     })
