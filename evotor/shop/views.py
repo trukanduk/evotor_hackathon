@@ -39,11 +39,20 @@ def products_view(request, shop_id):
                 shop_data[p.bar_code]['values'] = list(map(float, df.iloc[:,1].values))
                 shop_data[p.bar_code]['is_pred'] = list(map(bool, df.iloc[:,2].values))
 
+    suggests = pd.read_csv("suggests_for_shops.csv")
+    vals = pd.read_csv("items_to_add.csv").values
+    id_to_name = dict(list(zip(vals[:, 0], vals[:, 1])))
+
+    items = list(filter(lambda x: x > 0, list(suggests[shop_id])))
+    names = list(map(lambda x: id_to_name[x], items))
+
+
     return render(request, "shop/products.html", {
         "products": products,
         "shop": shop,
         "shop_id": shop_id,
-        "shop_data": shop_data
+        "shop_data": shop_data,
+        "suggests": list(zip(items, names))
     })
 
 @safe_view
@@ -87,3 +96,17 @@ def get_excel(request, shop_id):
     response['Content-Length'] = file_to_send.size
     response['Content-Disposition'] = 'attachment; filename="products.xls"'
     return response
+
+
+@safe_view
+def get_suggests(request, shop_id):
+    suggests = pd.read_csv("suggests_for_shops.csv")
+    vals = pd.read_csv("items_to_add.csv").values
+    id_to_name = dict(list(zip(vals[:, 0], vals[:, 1])))
+
+    items = list(filter(lambda x: x > 0, list(suggests[shop_id])))
+    names = list(map(lambda x: id_to_name[x], items))
+
+    return render(request, "shop/suggests.html", {
+        "suggests": list(zip(items, names))
+    })
