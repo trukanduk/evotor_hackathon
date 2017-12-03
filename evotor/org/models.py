@@ -6,6 +6,7 @@ from util.model import BaseModel
 
 class Organization(BaseModel):
     title = models.CharField(max_length=30, unique=True)
+    evotor_user_id = models.CharField(max_length=30, null=True, default="")
 
     def __str__(self):
         return self.title

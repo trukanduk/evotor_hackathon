@@ -23,3 +23,30 @@ def organization_index_view(request):
     return render(request, "org/index.html", {
         "user_shops": user_shops,
     })
+
+
+def register_api_view(request):
+    params = request.POST
+    
+    org = Organization.objects.create(
+        title=params.get("org_name", ""),
+        evotor_user_id=params.get("userId", ""),
+    )
+
+    email = params.get("email", "")
+    password = 123
+    user = User.objects.create_user(
+        params.get("username", ""),
+        email,
+        password,
+    )
+    user.first_name = params.get("first_name", "")
+    user.last_name = params.get("last_name", "")
+    user.role = User.Role.ADMIN
+    user.organization = org
+    user.save()
+    
+    return JsonResponse({
+        "result": "ok",
+    })
+
