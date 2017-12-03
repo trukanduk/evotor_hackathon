@@ -60,12 +60,13 @@ def register_api_view(request):
     
     send_mail(
         "{}, спасибо за регистрацию!".format(user.first_name),
-        "Ссылка для входа в личный кабинет https://evorot.kingbee.solutions",
+        "Ссылка для входа в личный кабинет https://evorot.kingbee.solutions/org/active/{}/".format(user.activation_link),
         "admin@evorot.kingbee.solutions",
         [email],
     )
     
     return JsonResponse({
-        "result": "ok",
+        "userId": org.evotor_user_id,
+        "token": "123",
     })
 
