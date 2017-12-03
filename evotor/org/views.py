@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth import authenticate
+from django.contrib.auth import login
 from org.utils import (
     get_user_shops,
 )
@@ -85,7 +85,7 @@ def activate_view(request, activation_id):
         user.set_password(password)
         user.save()
         
-        authenticate(username=user.username, password=password)
+        login(request, user)
 
         return redirect("/org/")
 
