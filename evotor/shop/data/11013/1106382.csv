@@ -1,0 +1,16 @@
+,values,is_preds,onhand
+0,0,False,4.0
+1,2,False,4.0
+2,3,False,4.0
+3,6,False,4.0
+4,2,False,4.0
+5,4,False,4.0
+6,2,False,4.0
+7,7,False,4.0
+8,8,False,4.0
+9,7,False,4.0
+10,4,False,4.0
+11,4,False,4.0
+12,6,True,4.0
+13,8,True,4.0
+14,8,True,4.0
