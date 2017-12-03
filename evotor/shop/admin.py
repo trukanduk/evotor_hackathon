@@ -10,7 +10,7 @@ from shop.models import (
 
 @admin.register(Shop)
 class ShopAdmin(admin.ModelAdmin):
-    list_display = ("title", "organization",)
+    list_display = ("title", "organization", "data_id",)
 
 
 @admin.register(ProductTag)
@@ -34,6 +34,6 @@ class ProviderAdmin(admin.ModelAdmin):
 @admin.register(Purchase)
 class PurchaseAdmin(admin.ModelAdmin):
     list_display = ("product_title", "price", "dt",)
-    
+
     def product_title(self, purchase):
         return purchase.product.title
