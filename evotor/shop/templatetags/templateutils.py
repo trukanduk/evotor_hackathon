@@ -46,17 +46,24 @@ def pickrand(iterable):
 
 @register.filter(name="getminpairsuggname")
 def getminpairsuggname(pair_suggestion):
-    if float(pair_suggestion[1][5]) < float(pair_suggestion[1][6]):
-        return pair_suggestion[1][3]
-    else:
+    # raise ValueError(pair_suggestion)
+    try:
+        if float(pair_suggestion[1][5]) < float(pair_suggestion[1][6]):
+            return pair_suggestion[1][3]
+        else:
+            return pair_suggestion[1][4]
+    except:
         return pair_suggestion[1][4]
 
 @register.filter(name="getoptimizedpairsuggestcost")
-def getoptimizedpairsuggestcost(pair_suggestion, ratio=15.0):
-    if float(pair_suggestion[1][5]) < float(pair_suggestion[1][6]):
-        return 0.01 * float(pair_suggestion[1][5]) * ratio
-    else:
-        return 0.01 * float(pair_suggestion[1][6]) * ratio
+def getoptimizedpairsuggestcost(pair_suggestion, ratio=0.15):
+    try:
+        if float(pair_suggestion[1][5]) < float(pair_suggestion[1][6]):
+            return 0.01 * float(pair_suggestion[1][5]) * (100.0 - ratio)
+        else:
+            return 0.01 * float(pair_suggestion[1][6]) * (100.0 - ratio)
+    except:
+        return 0.01 * float(pair_suggestion[1][6]) * (100.0 - ratio)
 
 @register.filter(name="randnum")
 def randnum(m, mm):

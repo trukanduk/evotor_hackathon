@@ -43,9 +43,8 @@ def products_view(request, shop_id):
 
     shop_data = get_shop_data(shop_id, products)
 
-    # raise RuntimeError([shop.data_id, ''] + sorted(t))
     try:
-        output = extract_suggests(shop.data_id)
+        output = extract_suggests(shop.id)
     except:
         output =[]
 
@@ -105,7 +104,7 @@ def get_excel(request, shop_id):
 def get_suggests(request, shop_id):
     shop = Shop.objects.get(id=shop_id)
     try:
-        output = extract_suggests(shop.data_id)
+        output = extract_suggests(shop.id)
     except:
         output =[]
 
@@ -134,11 +133,19 @@ def extract_suggests(shop_id):
     for item, name in zip(items, names):
         output += [("suggest", item, name)]
 
-    # try:
-    #     with open(str(shop_id) + ".csv", "r") as f:
-    #         output = [("pair", list(map(lambda x: x.split(",", maxsplit=1), f.readlines())))]
-    # except:
-    #     pass
+    try:
+        def filter_(x):
+            if x.startswith('"'):
+                x = x[1:]
+            if x.endswith('"'):
+                x = x[:-1]
+
+            return x.replace('""', '"')
+
+        with open(str(shop_id) + ".csv", "r") as f:
+            output += [("pair", [filter_(line.split(',')[1]) for line in f.readlines() if line.strip()])]
+    except:
+        pass
 
     illiquid = pd.read_csv("illiquid.csv")
     temp = illiquid[illiquid["shop_id"] == int(shop_id)]
