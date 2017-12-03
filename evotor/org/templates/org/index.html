@@ -1,20 +1,41 @@
 {% extends "main.html" %}
 
 {% block content %}
-    <div>
-        {{ request.user.full_name }}
+    <div class="org-title">
+        <span>
+            <span class="oi oi-target"></span>
+            {{ request.user.organization.title }}
+        </span>
+        <span>
+            {{ request.user.full_name }}
+        </span>
     </div>
-    <div>
-        Организация {{ request.user.organization.title }}
-    </div>
-    <div>
-        Магазины
-    </div>
-    <div>
+    <table class="table table-bordered org-shops">
+        <tr>
+            <th>Права</th>
+            <th>Магазин</th>
+            <th>Менеджер</th>
+            <th>За неделю</th>
+            <th>За месяц</th>
+        </tr>
         {% for shop in user_shops %}
-            <div>
-                <a href="/shop/{{ shop.shop.id }}/products/">{{ shop.shop.title }}</a>
-            </div>
+            <tr class="org-shop">
+                <td class="org-shop-rights">
+                    <span class="oi oi-eye"></span>
+                    {% if shop.type == shop.Role.READ_WRITE %}
+                        <span class="oi oi-pencil"></span>
+                    {% endif %}
+                </td>
+                <td class="org-shop-title">
+                    <a href="/shop/{{ shop.shop.id }}/products/">{{ shop.shop.title }}</a>
+                </td>
+                <td class="org-shop-managers">
+                </td>
+                <td class="org-shop-week-profit">
+                </td>
+                <td class="org-shop-month-profit">
+                </td>
+            </tr>
         {% endfor %}
     </div>
 {% endblock %}
