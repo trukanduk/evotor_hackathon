@@ -1,4 +1,13 @@
 function request_items(model, template, filters) {
+    if (typeof shop_id !== 'undefined') {
+        if (!filters.filter) {
+            filters.filter = {}
+        }
+        if (!filters.filter.shop_id) {
+            filters.filter.shop_id = shop_id
+        }
+    }
+
     $("#items-container").html('');
     $("#items-loading-img").show();
     $("#items-container-loading-error").hide();
@@ -53,7 +62,7 @@ $(function() {
         let template = (typeof itemsTemplate === 'undefined' ? 'shop/' + itemsModelName + 's_items.html' : itemsTemplate);
         request_items(
                 itemsModelName, template,
-                {filter: itemsFilterInfo, order_by: '["' + order + column + '"]'});
+                {filter: itemsFilterInfo, order_by: [order + column]});
     });
     update_items_icons()
 });
