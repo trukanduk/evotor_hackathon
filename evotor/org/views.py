@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate
 from org.utils import (
     get_user_shops,
 )
@@ -60,7 +61,7 @@ def register_api_view(request):
     
     send_mail(
         "{}, спасибо за регистрацию!".format(user.first_name),
-        "Ссылка для входа в личный кабинет https://evorot.kingbee.solutions/org/active/{}/".format(user.activation_link),
+        "Ссылка для входа в личный кабинет: https://evorot.kingbee.solutions/org/activate/{}/".format(user.activation_link),
         "admin@evorot.kingbee.solutions",
         [email],
     )
@@ -70,3 +71,23 @@ def register_api_view(request):
         "token": "123",
     })
 
+
+def activate_view(request, activation_id):
+    user = User.objects.get(activation_link=activation_id)
+    
+    if request.method == "POST":
+        password = request.POST.get("password", "")
+        confirm_password = request.POST.get("confirm_password", "")
+
+        if password != confirm_password:
+            raise Exception("password != password2")
+        
+        user.set_password(password)
+        user.save()
+        
+        authenticate(username=user.username, password=password)
+
+        return redirect("/org/")
+
+    return render(request, "org/activation.html", {
+    })
