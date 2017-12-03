@@ -1,11 +1,13 @@
 {% load templateutils %}
 
 <div class="alert alert-success row">
+    <span>
     {% if suggestion.0 == "suggest" %}
-        Мы обнаружили, что на рынке высокой популярностью пользуется товар &nbsp;<i>{{suggestion.2.strip}}</i>. Возможно, стоит включить его в свои предложения!
+        Мы обнаружили, что на рынке высокой популярностью пользуется товар <i>{{suggestion.2.strip}}</i>. Возможно, стоит включить его в свои предложения!
     {% elif suggestion.0 == "pair" %}
         Мы нашли пару товаров, которые часто покупают вместе: <i>{{suggestion.1.3}}</i> и <i>{{suggestion.1.4}}</i>. Вы можете снизить цену на {{suggestion|getminpairsuggname}} до {{suggestion|getoptimizedpairsuggestcost:15.0}}&#8381; чтобы увеличить свобю прибыль!
     {% elif suggestion.0 == "ill" %}
-        Мы нашли товар, который не пользуется спросом -&nbsp;<i>{{suggestion.3.title.strip}}</i>. Мы предлагаем снизить цену на {{10|randnum:20}}%, чтобы увеличить спрос, и свою прибыль!
+        Мы нашли товар, который не пользуется спросом - <i>{{suggestion.3.title.strip}}</i>. Мы предлагаем снизить цену на {{10|randnum:20}}%, чтобы увеличить спрос, и свою прибыль!
     {% endif %}
+</span>
 </div>

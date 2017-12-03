@@ -94,7 +94,8 @@ def get_excel(request, shop_id):
 
 @safe_view
 def get_suggests(request, shop_id):
-    output = extract_suggests(shop_id)
+    shop = Shop.objects.get(id=shop_id)
+    output = extract_suggests(shop.data_id)
 
     return render(request, "shop/suggests.html", {
         "suggests": output
@@ -125,5 +126,11 @@ def extract_suggests(shop_id):
 
     for good_id, score in zip(items, scores):
         output += [("ill", good_id, score, Product.objects.all().filter(bar_code=good_id).get())]
+
+    return output
+
+def extract_warnings(shop_id, type_):
+    shop = Shop.objects.get(id=shop_id)
+    empty_products = Product.objects.filter(shop_id=shop_id)
 
     return output
