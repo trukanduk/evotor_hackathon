@@ -32,11 +32,6 @@ def get_shop_data(shop_id, products):
                 shop_data[p.bar_code]['values'] = list(map(float, df.iloc[:,1].values))
                 shop_data[p.bar_code]['is_pred'] = list(map(bool, df.iloc[:,2].values))
 
-    try:
-        output = extract_suggests(shop.data_id)
-    except:
-        output =[]
-
     return shop_data
 
 @safe_view
@@ -49,7 +44,10 @@ def products_view(request, shop_id):
     shop_data = get_shop_data(shop_id, products)
 
     # raise RuntimeError([shop.data_id, ''] + sorted(t))
-    output = extract_suggests(shop_id)
+    try:
+        output = extract_suggests(shop.data_id)
+    except:
+        output =[]
 
     return render(request, "shop/products.html", {
         "products": products,
@@ -106,7 +104,10 @@ def get_excel(request, shop_id):
 @safe_view
 def get_suggests(request, shop_id):
     shop = Shop.objects.get(id=shop_id)
-    output = extract_suggests(shop_id)
+    try:
+        output = extract_suggests(shop.data_id)
+    except:
+        output =[]
 
     return render(request, "shop/suggests.html", {
         "suggests": output,
@@ -135,7 +136,7 @@ def extract_suggests(shop_id):
 
     # try:
     #     with open(str(shop_id) + ".csv", "r") as f:
-    #         output += [("pair", list(map(lambda x: x.split(",", maxsplit=1), f.readlines())))]
+    #         output = [("pair", list(map(lambda x: x.split(",", maxsplit=1), f.readlines())))]
     # except:
     #     pass
 
