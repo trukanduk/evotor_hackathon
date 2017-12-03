@@ -14,7 +14,9 @@ from query_manager.utils import (
 )
 from util.views import safe_view
 import pandas as pd
+import os
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 @safe_view
 def products_view(request, shop_id):
@@ -23,11 +25,25 @@ def products_view(request, shop_id):
     params.filter.update(shop=shop)
     products = exec_query_raw(params, Product)
 
+    shop_data = {}
+    t = ''
+    if shop.data_id and os.path.isdir(BASE_DIR + '/data/' + shop.data_id):
+        for p in products:
+            fname = BASE_DIR + '/data/' + shop.data_id + '/' + p.bar_code + '.csv'
+            t += fname + '\n'
+            if p.bar_code and os.path.isfile(fname):
+                shop_data[p.bar_code] = {}
+
+                df = pd.read_csv(fname)
+                shop_data[p.bar_code]['rest'] = list(map(float, df.iloc[:,0].values))
+                shop_data[p.bar_code]['values'] = list(map(float, df.iloc[:,1].values))
+                shop_data[p.bar_code]['is_pred'] = list(map(bool, df.iloc[:,2].values))
+
     return render(request, "shop/products.html", {
         "products": products,
-        "shop_id": shop_id
+        "shop_id": shop_id,
+        "shop_data": shop_data
     })
-
 
 @safe_view
 def providers_view(request):
