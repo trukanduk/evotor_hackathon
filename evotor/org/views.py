@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render
 from django.core.mail import send_mail
 from django.http import JsonResponse
@@ -35,7 +36,7 @@ def organization_index_view(request):
 
 @csrf_exempt
 def register_api_view(request):
-    params = request.POST
+    params = json.loads(request.body)
     
     org = Organization.objects.create(
         title=params.get("org_name", ""),
