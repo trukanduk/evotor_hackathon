@@ -25,12 +25,12 @@ def get_user_shops_unsorted(user):
             Shop.objects.filter(organization=user.organization),
         ))
 
-        for user_shop in UserShop.objects.filter(user=request.user):
+        for user_shop in UserShop.objects.filter(user=user):
             title2user_shop[user_shop.title] = user_shop
 
         return list(title2user_shop.values())
 
-    return list(sorted(UserShop.objects.filter(user=request.user), key=lambda us: us.shop.title))
+    return list(sorted(UserShop.objects.filter(user=user), key=lambda us: us.shop.title))
     
 
 def get_user_shops(user):
