@@ -22,6 +22,21 @@
           <b>{{ shop.title }}</b>
       </span>
   </div>
+  {% if suggests %}
+    {% with suggestion=suggests|pickrandname %}
+      <div class="alert alert-success row">
+        Мы обнаружили, что на рынке высокой популярностью пользуется товар &nbsp;<i>{{suggestion.1.strip}}</i>. Возможно, стоит включить его в свои товары!
+        {# Мы нашли пару товаров, которые часто покупают вместе. Вы можете продавать их вместе за min - 30% #}
+        {# Мы нашли товар, который не пользуется спросом. Мы предлагаем снизить цену на NAME на 10%, чтобы увеличить свою прибыль #}
+      </div>
+      <div class="container-fluid" style="margin-top: -20px; margin-bottom: 20px;">
+        <div style="float:right">
+          <button class="btn btn-link">Все предложения >></button>
+        </div>
+        <div style="clear:right"></div>
+      </div>
+    {% endwith %}
+  {% endif %}
   <div class="card text-white bg-secondary product-items-header">
     <div class="card-header product-items-header-header" role="tab" id="product-items-header-header">
       <div class="row">
@@ -33,7 +48,7 @@
           </span>
         </div>
         <div class="col-2 item-header item-header-status">
-          Статус
+          Остаток
         </div>
         <div class="col-2 item-header item-header-count">
           Кол-во

@@ -1,6 +1,7 @@
 from django import template
 import json
 from django.utils.safestring import mark_safe
+from random import choice
 
 register = template.Library()
 
@@ -38,3 +39,8 @@ def getstatus(v, m):
     v = float(v)
     m, mm = map(int, m.split('-'))
     return min(v, mm) - m
+
+@register.filter(name="pickrandname")
+def pickrand(iterable):
+    return choice(iterable)
+
