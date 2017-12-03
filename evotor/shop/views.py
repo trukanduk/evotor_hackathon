@@ -133,11 +133,11 @@ def extract_suggests(shop_id):
     for item, name in zip(items, names):
         output += [("suggest", item, name)]
 
-    try:
-        with open(str(shop_id) + ".csv", "r") as f:
-            output += [("pair", list(map(lambda x: x.split(",", maxsplit=1), f.readlines())))]
-    except:
-        pass
+    # try:
+    #     with open(str(shop_id) + ".csv", "r") as f:
+    #         output += [("pair", list(map(lambda x: x.split(",", maxsplit=1), f.readlines())))]
+    # except:
+    #     pass
 
     illiquid = pd.read_csv("illiquid.csv")
     temp = illiquid[illiquid["shop_id"] == int(shop_id)]
