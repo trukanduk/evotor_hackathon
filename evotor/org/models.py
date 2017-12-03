@@ -37,6 +37,7 @@ class User(AbstractUser):
         default=Role.ADMIN,
     )
     default_password = models.CharField(max_length=30, null=True, blank=True)
+    activation_link = models.CharField(max_length=30, null=True, blank=True, default=True)
     
     def full_name(self):
         return "{} {}".format(self.first_name, self.last_name)

@@ -1,10 +1,17 @@
 from django.shortcuts import render
+from django.core.mail import send_mail
+from django.http import JsonResponse
 from org.utils import (
     get_user_shops,
 )
 from shop.models import (
     UserShop,
 )
+from org.models import (
+    User,
+    Organization,
+)
+from util.utils import get_new_id
 
 
 def organization_index_view(request):
@@ -36,7 +43,7 @@ def register_api_view(request):
     email = params.get("email", "")
     password = 123
     user = User.objects.create_user(
-        params.get("username", ""),
+        params.get("login", ""),
         email,
         password,
     )
@@ -44,7 +51,15 @@ def register_api_view(request):
     user.last_name = params.get("last_name", "")
     user.role = User.Role.ADMIN
     user.organization = org
+    user.activation_link = get_new_id()
     user.save()
+    
+    send_mail(
+        "{}, спасибо за регистрацию!".format(user.first_name),
+        "Ссылка для входа в личный кабинет https://evorot.kingbee.solutions",
+        "admin@evorot.kingbee.solutions",
+        [email],
+    )
     
     return JsonResponse({
         "result": "ok",
