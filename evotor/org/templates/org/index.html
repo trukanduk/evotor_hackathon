@@ -1,13 +1,29 @@
 {% extends "main.html" %}
 
 {% block content %}
+    <style>
+        .org-shop-profit-positive {
+            color: #0a0;
+        }
+
+        .org-shop-profit-negative {
+            color: #a00;
+        }
+
+        .org-title {
+            border: 1px solid #eee;
+            padding: 10px;
+        }
+    </style>
     <div class="org-title">
         <span>
             <span class="oi oi-target"></span>
-            {{ request.user.organization.title }}
+            <b>{{ request.user.organization.title }}</b>
         </span>
         <span>
             {{ request.user.full_name }}
+            -
+            {{ request.user.role_for_human }}
         </span>
     </div>
     <table class="table table-bordered org-shops">
@@ -30,10 +46,25 @@
                     <a href="/shop/{{ shop.shop.id }}/products/">{{ shop.shop.title }}</a>
                 </td>
                 <td class="org-shop-managers">
+                    {% for manager in shop.shop.managers %}
+                        {{ manager.full_name }}<br>
+                    {% endfor %}
                 </td>
-                <td class="org-shop-week-profit">
+                <td class="org-shop-week-profit org-shop-profit-{{ shop.shop.week_profit_type }}">
+                    {{ shop.shop.week_profit }}&#8381;
+                    {% if shop.shop.week_profit_type == "positive" %}
+                        <span class="oi oi-caret-top"></span>
+                    {% else %}
+                        <span class="oi oi-caret-bottom"></span>
+                    {% endif %}
                 </td>
-                <td class="org-shop-month-profit">
+                <td class="org-shop-month-profit org-shop-profit-{{ shop.shop.month_profit_type }}">
+                    {{ shop.shop.month_profit }}&#8381;
+                    {% if shop.shop.month_profit_type == "positive" %}
+                        <span class="oi oi-caret-top"></span>
+                    {% else %}
+                        <span class="oi oi-caret-bottom"></span>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}

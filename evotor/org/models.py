@@ -40,5 +40,13 @@ class User(AbstractUser):
     def full_name(self):
         return "{} {}".format(self.first_name, self.last_name)
 
+    def role_for_human(self):
+        if self.role == self.Role.ADMIN:
+            return "Владелец"
+        if self.role == self.Role.TOP_MANAGER:
+            return "Топ-менеджер"
+        if self.role == self.Role.MANAGER:
+            return "Менеджер"
+
     def __str__(self):
         return self.full_name()

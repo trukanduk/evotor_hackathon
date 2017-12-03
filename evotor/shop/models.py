@@ -7,6 +7,8 @@ class Shop(BaseModel):
     title = models.CharField(max_length=50, unique=True)
     organization = models.ForeignKey(Organization, related_name="+")
     data_id = models.CharField(max_length=30, default="")
+    month_profit = models.FloatField(default=0)
+    week_profit = models.FloatField(default=0)
 
     def __str__(self):
         return self.title
