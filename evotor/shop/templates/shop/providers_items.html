@@ -11,7 +11,7 @@
   <div class="card provider-item">
     <div class="card-header provider-header" role="tab" id="provider-{{forloop.counter0}}-header">
       <div class="row">
-        <div class="col-4">
+        <div class="col-6">
           <h5 class="mb-0">
             <a data-toggle="collapse" href="#provider-{{forloop.counter0}}-body" aria-expanded="true" aria-controls="provider-{{forloop.counter0}}-body">
               {{provider.title}}
@@ -19,26 +19,65 @@
           </h5>
         </div>
         <div class="col-2">
-          20.11.2017
+          {% if provider.last_delivery_time %}
+            {{provider.last_delivery_time|date:"d.m.Y"}}
+          {% else %}
+            &mdash;
+          {% endif %}
         </div>
         <div class="col-2">
-          28.11.2017
+            {{provider.regularit}}
         </div>
-        <div class="col-3 provider-{{forloop.counter0}}-tags provider-tags">
-          <button role="button" class="btn btn-secondary btn-sm tag-button">
-            Хлебзавод
-          </button>
-          <button role="button" class="btn btn-secondary btn-sm tag-button">
-            Скоропортящееся
-          </button>
+        <div class="col-2">
+          {% if provider.next_delivery_time %}
+            {{provider.next_delivery_time|date:"d.m.Y"}}
+          {% else %}
+            &mdash;
+          {% endif %}
         </div>
       </div>
     </div>
 
     <div id="provider-{{forloop.counter0}}-body" class="collapse provider-body" role="tabpanel" aria-labelledby="provider-{{forloop.counter0}}-header" data-parent="#accordion">
       <div class="card-body">
-        <img src="http://www.sunny-cat.ru/datas/users/1-kenny005.jpg" style="width:30%;">
-        Чо надо
+        <div class="row">
+          <div class="col-6">
+            <h5>Закупаемые товары</h5>
+            {%for product in provider.products.all%}
+              <button role="button" class="btn btn-light">{{product.title}}</button>
+            {% endfor %}
+          </div>
+          <div class="row">
+            <table class="table">
+              <tr>
+                <th>
+                  Период доставки
+                </th>
+                <th>
+                  Последний заказ
+                </th>
+                <th>
+                  Последний чек
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  {{provider.delivery_period}}
+                </td>
+                <td>
+                  {% if provider.last_delivery_date %}
+                    {{provider.last_delivery_date}}
+                  {% else %}
+                    &mdash;
+                  {% endif %}
+                </td>
+                <td>
+                  {{provider.last_cost}}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   </div>

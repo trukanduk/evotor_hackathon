@@ -82,6 +82,11 @@ class Product(BaseModel):
 class Provider(BaseModel):
     title = models.CharField(max_length=30, unique=True)
     products = models.ManyToManyField(Product, related_name="+", blank=True)
+    regularity = models.CharField(max_length=30, default="?")
+    last_delivery_date = models.DateTimeField(null=True, default=None)
+    next_delivery_date = models.DateTimeField(null=True, default=None)
+    delivery_period = models.CharField(max_length=30, default="?")
+    last_cost = models.FloatField(default=100500.0)
 
     def __str__(self):
         return self.title
