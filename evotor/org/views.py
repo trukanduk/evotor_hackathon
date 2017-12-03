@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.core.mail import send_mail
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from org.utils import (
     get_user_shops,
 )
@@ -32,6 +33,7 @@ def organization_index_view(request):
     })
 
 
+@csrf_exempt
 def register_api_view(request):
     params = request.POST
     
