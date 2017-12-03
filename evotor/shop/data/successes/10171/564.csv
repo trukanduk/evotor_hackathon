@@ -1,0 +1,15 @@
+,values,is_preds,onhand
+0,4,False,2.25
+1,0,False,2.25
+2,2,False,2.25
+3,11,False,2.25
+4,2,False,2.25
+5,3,False,2.25
+6,7,False,2.25
+7,0,False,2.25
+8,3,False,2.25
+9,2,False,2.25
+10,0,False,2.25
+11,2,True,2.25
+12,3,True,2.25
+13,4,True,2.25

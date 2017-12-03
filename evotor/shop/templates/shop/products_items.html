@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="col-2 product-count product-{{product.bar_code}}-count">
-          {{product.count}} шт
+          {{product.count}}
         </div>
         <div class="col-2 product-delivery_date product-{{product.bar_code}}-delivery_date">
           {{product.delivery_date|date:"d.m.Y"}}
@@ -48,8 +48,79 @@
             </div>
             <canvas width="100%" height="65%" class="product-{{product.bar_code}}-chart product-chart inactive"></canvas>
           </div>
+          <div class="col-6">
+            <table class="table">
+              <tr>
+                <th>
+                  Закупочная цена
+                </th>
+                <th>
+                  На продажу
+                </th>
+                <th>
+                  Разница
+                </th>
+                <th>
+                  Маржа
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  {{product.cost_price}}&#8381;
+                </td>
+                <td>
+                  {{product.price}}&#8381;
+                </td>
+                <td>
+                  {{product.price|minus:product.cost_price|floatformat}}&#8381;
+                </td>
+                <td>
+                  {{product.price|marja:product.cost_price|floatformat}}%
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  Остаток товара
+                </th>
+                <th>
+                  Поставщик
+                </th>
+                <th>
+                  Категория
+                </th>
+                <th>
+                  Срок годности
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  {{product.count}} ед.
+                </td>
+                <td>
+                  &mdash;
+                </td>
+                <td>
+                  &mdash;
+                </td>
+                <td>
+                  &mdash;
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  Все теги
+                </th>
+                <td colspan="3">
+                  {% for tag in product.tags.all %}
+                    <button role="button" class="btn btn-secondary btn-sm tag-button">
+                      {{tag}}
+                    </button>
+                  {% endfor %}
+                </td>
+              </tr>
+            </table>
+          </div>
         </div>
-
       </div>
     </div>
   </div>

@@ -27,9 +27,9 @@ def products_view(request, shop_id):
 
     shop_data = {}
     t = ''
-    if shop.data_id and os.path.isdir(BASE_DIR + '/data/' + shop.data_id):
+    if shop.data_id and os.path.isdir(BASE_DIR + '/data/successes/' + shop.data_id):
         for p in products:
-            fname = BASE_DIR + '/data/' + shop.data_id + '/' + p.bar_code + '.csv'
+            fname = BASE_DIR + '/data/successes/' + shop.data_id + '/' + p.bar_code + '.csv'
             t += fname + '\n'
             if p.bar_code and os.path.isfile(fname):
                 shop_data[p.bar_code] = {}
