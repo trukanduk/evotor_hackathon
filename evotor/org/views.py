@@ -36,7 +36,8 @@ def organization_index_view(request):
 
 @csrf_exempt
 def register_api_view(request):
-    params = json.loads(request.body)
+    params = json.loads(request.body.decode("utf-8"))
+    print(params)
     
     org = Organization.objects.create(
         title=params.get("org_name", ""),
