@@ -13,7 +13,7 @@
     <div>
         {% for shop in user_shops %}
             <div>
-                {{ shop.shop.title }}
+                <a href="/shop/{{ shop.shop.id }}/products/">{{ shop.shop.title }}"</a>
             </div>
         {% endfor %}
     </div>
