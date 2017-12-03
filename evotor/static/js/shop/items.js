@@ -4,14 +4,19 @@ function request_items(model, template, filters) {
     $("#items-container-loading-error").hide();
     return query_html(model, template, filters)
             .done(function(html) {
+                console.log("done")
                 $("#items-container").html(html);
                 update_items_icons();
             })
             .fail(function(data) {
+                console.log("fail")
                 $("#item-container-loading-error-desc").html(data.content || "Неизвестная ошибка");
                 $("#items-container-loading-error").show();
             })
-            .always(function() { $("#items-loading-img").hide(); });
+            .always(function() {
+                console.log("always")
+                $("#items-loading-img").hide();
+            });
 }
 
 function update_items_icons() {
