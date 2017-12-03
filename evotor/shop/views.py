@@ -26,11 +26,11 @@ def products_view(request, shop_id):
     products = exec_query_raw(params, Product)
 
     shop_data = {}
-    t = ''
+    t = []
     if shop.data_id and os.path.isdir(BASE_DIR + '/data/successes/' + shop.data_id):
         for p in products:
+            t += [int(p.bar_code)]
             fname = BASE_DIR + '/data/successes/' + shop.data_id + '/' + p.bar_code + '.csv'
-            t += fname + '\n'
             if p.bar_code and os.path.isfile(fname):
                 shop_data[p.bar_code] = {}
 
@@ -39,6 +39,7 @@ def products_view(request, shop_id):
                 shop_data[p.bar_code]['values'] = list(map(float, df.iloc[:,1].values))
                 shop_data[p.bar_code]['is_pred'] = list(map(bool, df.iloc[:,2].values))
 
+    # raise RuntimeError([shop.data_id, ''] + sorted(t))
     output = extract_suggests(shop.data_id)
 
     return render(request, "shop/products.html", {
@@ -46,7 +47,8 @@ def products_view(request, shop_id):
         "shop": shop,
         "shop_id": shop_id,
         "shop_data": shop_data,
-        "suggests": output
+        "suggests": output,
+        # "has_data": list(shop_data.keys())
     })
 
 @safe_view

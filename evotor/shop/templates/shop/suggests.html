@@ -1,0 +1,20 @@
+{% extends "main.html" %}
+{% load staticfiles %}
+{% load templateutils %}
+
+{% block head_base_override  %}
+  <link href="{% static "css/shop/products.css" %}" rel="stylesheet">
+  <script type="text/javascript" src="{% static "js/chartjs/Chart.bundle.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/shop/items.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/shop/charts.js" %}"></script>
+{% endblock %}
+
+{% block content %}
+  <h4>Предложения</h4>
+    {% for suggestion in suggests %}
+      {%include "shop/single_suggestion.html" with suggestion=suggestion %}
+    {% empty %}
+      Пусто!
+    {% endfor %}
+
+{% endblock %}

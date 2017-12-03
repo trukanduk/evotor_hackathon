@@ -9,7 +9,7 @@
 
 {% for product in objs %}
   <div class="card product-item">
-    <div class="card-header product-header" role="tab" id="product-{{product.bar_code}}-header">
+    <div class="card-header product-header border" role="tab" id="product-{{product.bar_code}}-header">
       <div class="row">
         <div class="col-4">
           <a class="product-expand-link" data-toggle="collapse" href="#product-{{product.bar_code}}-body" aria-expanded="true" aria-controls="product-{{product.bar_code}}-body" barcode="{{product.bar_code}}">
