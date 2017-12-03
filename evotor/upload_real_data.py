@@ -47,7 +47,7 @@ def pivo():
     shop = Shop.objects.create(
         organization=org,
         title="Пиво",
-        data_id=17846
+        data_id=23293
     )
 
     products = pd.read_csv("pivo.csv").values
@@ -67,7 +67,7 @@ def alco():
     shop = Shop.objects.create(
         organization=org,
         title="Алко",
-        data_id=17846
+        data_id=10171
     )
 
     products = pd.read_csv("newalco.csv").values
@@ -88,7 +88,7 @@ def regular():
     shop = Shop.objects.create(
         organization=org,
         title="Продуктовый",
-        data_id=17846
+        data_id=11013
     )
 
     products = pd.read_csv("newprod.csv").values
@@ -108,7 +108,7 @@ def meat():
     shop = Shop.objects.create(
         organization=org,
         title="Мясной",
-        data_id=17846
+        data_id=58864
     )
 
     products = pd.read_csv("newmeat.csv").values
@@ -129,7 +129,7 @@ def larek():
     shop = Shop.objects.create(
         organization=org,
         title="Ларек",
-        data_id=17846
+        data_id=108664
     )
 
     products = pd.read_csv("newlarek.csv").values
