@@ -43,9 +43,8 @@ def products_view(request, shop_id):
     vals = pd.read_csv("items_to_add.csv").values
     id_to_name = dict(list(zip(vals[:, 0], vals[:, 1])))
 
-    items = list(filter(lambda x: x > 0, list(suggests[shop_id])))
+    items = list(filter(lambda x: x > 0, list(suggests[shop.data_id])))
     names = list(map(lambda x: id_to_name[x], items))
-
 
     return render(request, "shop/products.html", {
         "products": products,
