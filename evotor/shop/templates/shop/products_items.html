@@ -9,10 +9,10 @@
 
 {% for product in objs %}
   <div class="card product-item">
-    <div class="card-header product-header" role="tab" id="product-{{forloop.counter0}}-header">
+    <div class="card-header product-header" role="tab" id="product-{{product.bar_code}}-header">
       <div class="row">
         <div class="col-4">
-          <a data-toggle="collapse" href="#product-{{forloop.counter0}}-body" aria-expanded="true" aria-controls="product-{{forloop.counter0}}-body">
+          <a class="product-expand-link" data-toggle="collapse" href="#product-{{product.bar_code}}-body" aria-expanded="true" aria-controls="product-{{product.bar_code}}-body" barcode="{{product.bar_code}}">
             {{product.title}}
           </a>
         </div>
@@ -23,13 +23,13 @@
             <div class="progress-bar bg-success" role="progressbar" style="width: {% widthratio product.count 1 10 %}%;" aria-valuenow="{% widthratio product.count 1 10 %}" aria-valuemin="0" aria-valuemax="100" title="20 / 63 / 80"></div>
           </div>
         </div>
-        <div class="col-2 product-count product-{{forloop.counter0}}-count">
+        <div class="col-2 product-count product-{{product.bar_code}}-count">
           {{product.count}} шт
         </div>
-        <div class="col-2 product-delivery_date product-{{forloop.counter0}}-delivery_date">
+        <div class="col-2 product-delivery_date product-{{product.bar_code}}-delivery_date">
           {{product.delivery_date|date:"d.m.Y"}}
         </div>
-        <div class="col-2 product-tags product-{{forloop.counter0}}-tags">
+        <div class="col-2 product-tags product-{{product.bar_code}}-tags">
           {% for tag in product.tags.all %}
             <button role="button" class="btn btn-secondary btn-sm tag-button">
               {{tag}}
@@ -39,10 +39,17 @@
       </div>
     </div>
 
-    <div id="product-{{forloop.counter0}}-body" class="collapse product-body" role="tabpanel" aria-labelledby="product-{{forloop.counter0}}-header" data-parent="#accordion">
+    <div id="product-{{product.bar_code}}-body" class="collapse product-body" role="tabpanel" aria-labelledby="product-{{product.bar_code}}-header" data-parent="#accordion">
       <div class="card-body">
-        <img src="http://www.3kol.tv/assets/memes_tpl/mini/mini_Doge.jpg">
-        Ты долбоёб?
+        <div class="row">
+          <div class="product-{{product.bar_code}}-chart-wrap product-chart-wrap col-6">
+            <div class="alert alert-warning product-{{product.bar_code}}-chart-stub product-chart-stub">
+              Не удалось загрузить график
+            </div>
+            <canvas width="100%" height="65%" class="product-{{product.bar_code}}-chart product-chart inactive"></canvas>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

@@ -3,12 +3,20 @@
 
 {% block head_base_override  %}
   <link href="{% static "css/shop/products.css" %}" rel="stylesheet">
+  <script type="text/javascript" src="{% static "js/chartjs/Chart.bundle.min.js" %}"></script>
   <script type="text/javascript" src="{% static "js/shop/items.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/shop/charts.js" %}"></script>
 {% endblock %}
 
 {% block content %}
   <script type="text/javascript">
     itemsModelName = 'product'
+    productChartsData = {
+        "-6624811988717334448": {
+          num_history: 2,
+          data: [1, 2, 3, 2, 3, 4, 5, 3]
+        }
+    }
     // itemsTemplate = 'shops/products_items.html'
   </script>
   <div class="card text-white bg-secondary product-items-header">
